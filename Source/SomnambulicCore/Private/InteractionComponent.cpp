@@ -94,7 +94,10 @@ void UInteractionComponent::Interact()
 
 		for (auto Action : Actions)
 		{
-			Action->PerformAction(this);
+			if (Action->CanPerformAction(this))
+			{
+				Action->PerformAction(this);
+			}
 		}
 	}
 }

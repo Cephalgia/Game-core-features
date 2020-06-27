@@ -4,9 +4,12 @@
 
 #include "DreamGameMode.h"
 #include "Inventory/Inventory.h"
+#include "InteractionComponent.h"
 
 void UAddToInventoryAction::PerformAction(UInteractionComponent * InComponent)
 {
+	Super::PerformAction(InComponent);
+
 	if (!InventoryAsset)
 	{
 		return;
