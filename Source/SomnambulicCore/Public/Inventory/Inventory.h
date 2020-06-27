@@ -1,12 +1,13 @@
 #pragma once
-#include "UObject/Object.h"
+#include "ManagerBase.h"
 
-#include "InventoryObjectBase.h"
+#include "Inventory/InventoryObjectBase.h"
+#include "Inventory/InventoryWidget.h"
 
 #include "Inventory.generated.h"
 
 UCLASS()
-class SOMNAMBULICCORE_API UInventory : public UObject
+class SOMNAMBULICCORE_API UInventory : public UManagerBase
 {
 	GENERATED_BODY()
 public:
@@ -16,9 +17,17 @@ public:
 
 	bool CheckObjectOwned(UInventoryObjectBase* InObject) const;
 
+	virtual void OnStartPlay() override;
+
+	UPROPERTY()
+	UInventoryWidget * UIWidget = nullptr;
+
 protected:
 
 	UPROPERTY()
 	TArray<UInventoryObjectBase*> OwnedObjects;
+
+	void OpenInventoryUI();
 	
+	friend class UInventoryWidget;
 };

@@ -13,7 +13,7 @@ public:
 	FName ObjectName;
 
 	UPROPERTY(EditAnywhere, Category = Data)
-	FName ObjectDisplayName;
+	FText ObjectDisplayName;
 	UPROPERTY(EditAnywhere, Category = Data)
 	FText ObjectDescription;
 

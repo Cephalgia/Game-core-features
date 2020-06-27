@@ -1,7 +1,10 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "Blueprint/UserWidget.h"
+
 #include "ManagerBase.h"
+
 #include "DreamGameMode.generated.h"
 
 UCLASS(BlueprintType, config = AdvancedLevelStreaming, meta = (DisplayName = "DreamGameMode"))
@@ -20,6 +23,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category=Settings)
 	TArray<TSubclassOf<UManagerBase>> ManagerClasses;
+	UPROPERTY(EditAnywhere, Category = Settings)
+	TSubclassOf<UUserWidget> UIWidgetClass;
+
 
 	template<typename T>
 	T* GetManager () const

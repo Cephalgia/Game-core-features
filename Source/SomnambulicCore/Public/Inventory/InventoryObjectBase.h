@@ -4,16 +4,18 @@
 
 #include "InventoryObjectBase.generated.h"
 
-UCLASS(abstract)
+UCLASS()
 class SOMNAMBULICCORE_API UInventoryObjectBase : public UObject
 {
 	GENERATED_BODY()
 public:
 	FName ObjectName;
 
-	FName ObjectDisplayName;
+	FText ObjectDisplayName;
 	FText ObjectDescription;
 
 	UPROPERTY()
 	UTexture2D * ObjectTexture = nullptr;
+
+	void Init(UInventoryDataAsset * ItemDataAsset);
 };

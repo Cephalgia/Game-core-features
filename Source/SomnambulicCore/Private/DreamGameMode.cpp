@@ -1,5 +1,8 @@
 #include "DreamGameMode.h"
 
+#include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
+
 ADreamGameMode::ADreamGameMode()
 	: Super()
 {
@@ -12,22 +15,30 @@ void ADreamGameMode::InitGame(const FString& MapName, const FString& Options, FS
 	for (auto ManagerClass : ManagerClasses)
 	{
 		UManagerBase * ManagerBase = NewObject<UManagerBase>(this, ManagerClass);
+		ManagerBase->Initialize();
+		Managers.Add(ManagerBase);
 	}
-	//LevelManager = NewObject<ULevelManager>(this);
-	//LevelManager->Initialize();
 }
 
 void ADreamGameMode::StartPlay()
 {
-	//if (LevelManager)
-	//	LevelManager->OnStartPlay();
-	Super::StartPlay();;
+	Super::StartPlay();
+
+	APlayerController * PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	EnableInput(PlayerController);
+
+	for (auto Manager : Managers)
+	{
+		Manager->OnStartPlay();
+	}
 }
 
 void ADreamGameMode::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	//if (LevelManager)
-	//	LevelManager->Tick(DeltaSeconds);
+	for (auto Manager : Managers)
+	{
+		Manager->Tick(DeltaSeconds);
+	}
 }
 

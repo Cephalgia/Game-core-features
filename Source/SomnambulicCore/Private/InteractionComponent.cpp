@@ -1,8 +1,11 @@
 #include "InteractionComponent.h"
+
 #include "Kismet/GameplayStatics.h"
 #include "Engine/Engine.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "DrawDebugHelpers.h"
+
+#include "DreamGameMode.h"
 
 UInteractionComponent::UInteractionComponent()
 {
@@ -25,8 +28,6 @@ void UInteractionComponent::BeginPlay()
 void UInteractionComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-	APlayerController * PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	GetOwner()->DisableInput(PlayerController);
 }
 
 void UInteractionComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
@@ -43,11 +44,13 @@ void UInteractionComponent::TickComponent(float DeltaTime, enum ELevelTick TickT
 			if (!HintComponent->IsVisible())
 			{
 				HintComponent->SetVisibility(true);
-				APlayerController * PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-				GetOwner()->EnableInput(PlayerController);
-				if (UInputComponent * InputComponent = Cast<UInputComponent>(GetOwner()->GetComponentByClass(UInputComponent::StaticClass())))
+				
+				if (ADreamGameMode * GameMode = Cast<ADreamGameMode>(GetWorld()->GetAuthGameMode()))
 				{
-					InputComponent->BindAction("Interact", EInputEvent::IE_Pressed, this, &UInteractionComponent::Interact);
+					if (UInputComponent * InputComponent = Cast<UInputComponent>(GameMode->GetComponentByClass(UInputComponent::StaticClass())))
+					{
+						InputComponent->BindAction("Interact", EInputEvent::IE_Pressed, this, &UInteractionComponent::Interact);
+					}
 				}
 			}
 			else
