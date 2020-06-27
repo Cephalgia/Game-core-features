@@ -3,12 +3,13 @@
 
 #include "InteractionAction.generated.h"
 
+class UInteractionComponent;
 
-UCLASS(BlueprintType)
+UCLASS(abstract)
 class SOMNAMBULICCORE_API UInteractionAction : public UObject
 {
 	GENERATED_BODY()
 public:
-	virtual void PerformAction() {};
+	virtual void PerformAction(UInteractionComponent * InComponent) {};
 	
 };

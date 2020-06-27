@@ -5,6 +5,8 @@
 #include "ISettingsModule.h"
 #include "ISettingsSection.h"
 #include "ISettingsContainer.h"
+
+#include "SomnambulicCoreConfig.h"
 #define LOCTEXT_NAMESPACE "FSomnambulicCoreModule"
 
 void FSomnambulicCoreModule::StartupModule()
@@ -20,23 +22,23 @@ void FSomnambulicCoreModule::StartupModule()
 			LOCTEXT("RuntimeWDCategoryDescription", "Base configuration for Somnambulic Core"));
 
 		// Register the settings
-		/*ISettingsSectionPtr SettingsSection = SettingsModule->RegisterSettings("Project", "Plugins", "SomnambulicCore Settings",
-			LOCTEXT("RuntimeGeneralSettingsName", "ALS Settings"),
+		ISettingsSectionPtr SettingsSection = SettingsModule->RegisterSettings("Project", "Plugins", "SomnambulicCore Settings",
+			LOCTEXT("RuntimeGeneralSettingsName", "Somnambulic Core Settings"),
 			LOCTEXT("RuntimeGeneralSettingsDescription", "Base configuration for Somnambulic Core"),
 			GetMutableDefault<USomnambulicCoreConfig>()
-		);*/
+		);
 	}
 }
 
 void FSomnambulicCoreModule::ShutdownModule()
 {
-	/*if (UObjectInitialized())
+	if (UObjectInitialized())
 	{
 		if (ISettingsModule* SettingsModule = FModuleManager::GetModulePtr<ISettingsModule>("Settings"))
 		{
-			SettingsModule->UnregisterSettings("Project", "Plugins", "ALS Settings");
+			SettingsModule->UnregisterSettings("Project", "Plugins", "Somnambulic Core Settings");
 		}
-	}*/
+	}
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
 }
